@@ -5,6 +5,8 @@ import SearchExercises from "../../components/SearchExercises/SearchExercises"
 import Exercises from "../../components/Exercises/Exercises"
 
 const Home: React.FC = () => {
+
+  
   return (
     <Box>
       <HeroBanner />
