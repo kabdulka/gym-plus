@@ -2,8 +2,6 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-import { useState } from 'react'
-
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home/Home';
 import ExerciseDetail from './pages/ExerciseDetail/ExerciseDetail';

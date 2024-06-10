@@ -1,6 +1,14 @@
 import React from 'react'
+import { ExerciseType } from '../../types'
 
-const Exercises: React.FC = () => {
+type ExercisesProp = {
+  bodyPart: string,
+  setBodyPart: (bodyPart: string) => void,
+  setExercises: (exercises: ExerciseType[]) => void
+}
+
+
+const Exercises: React.FC<ExercisesProp> = () => {
   return (
     <div>
       Exercises

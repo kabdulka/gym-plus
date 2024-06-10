@@ -43,10 +43,12 @@ body {
 }
 
 .react-horizontal-scrolling-menu--wrapper {
+  /* border: solid 1px red; */
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
+
 
 .detail-image {
   width: 729px;
@@ -113,9 +115,10 @@ body {
   }
 
 
-  .react-horizontal-scrolling-menu--scroll-container {
+  /* .react-horizontal-scrolling-menu--scroll-container {
     width: 500px;
-  }
+    background-color: #FF2625;
+  } */
 
   .left-arrow,
   .right-arrow {
@@ -141,4 +144,17 @@ body {
   .exercise-card {
     width: 280px;
   }
+}
+
+.react-horizontal-scrolling-menu--wrapper {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+  display: flex;
+  flex-direction: row;
 }

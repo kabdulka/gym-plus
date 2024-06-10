@@ -4,32 +4,37 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { exerciseOptions, fetchData } from "../../utils/fetchData";
 import { Height } from "@mui/icons-material";
 import axios from "axios";
+import HorizontalScrollBar from "../HorizontalScrollBar/HorizontalScrollBar";
+import { ExerciseType } from "../../types";
 
-type ExerciseType = {
+type SearchExercisesProp = {
   bodyPart: string;
-  equipment: string;
-  gifUrl: string;
-  id: string;
-  name: string;
-  target: string;
-  instructions: string[];
-  secondaryMuscles: string[];
+  setBodyPart: (bodyPart: string) => void;
+  setExercises: (exercises: ExerciseType[]) => void;
 };
 
-const SearchExercises: React.FC = () => {
+const SearchExercises: React.FC<SearchExercisesProp> = ({
+  bodyPart,
+  setBodyPart,
+  setExercises,
+}) => {
   const [search, setSearch] = useState<string>("");
-  const [exercises, setExercises] = useState<ExerciseType[]>([]);
   const [bodyParts, setBodyParts] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchBodyPartData = async () => {
-      const bodyPartsData = await fetchData("https://exercisedb.p.rapidapi.com/exercises", exerciseOptions);
-      setBodyParts(bodyPartsData);
-      setBodyParts(["all", ...bodyPartsData])
-    }
+      const bodyPartsData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+        exerciseOptions
+      );
+      console.log("BP List", bodyPartsData);
 
-    fetchBodyPartData();
-  }, [])
+      setBodyParts(["all", ...bodyPartsData]);
+    };
+    setBodyParts(["All", "Back", "Cardio", "Chest", "Lower Arms", "Lower Legs", "Neck", "Shoulders", "Upper Arms", "Upper Legs", "Waist"]);
+
+    // fetchBodyPartData();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value.toLocaleLowerCase());
@@ -55,6 +60,8 @@ const SearchExercises: React.FC = () => {
       setExercises(searchedExercises);
 
       // console.log(exercisesData);
+    } else {
+      alert("Please enter a seartch category or exercise");
     }
   };
 
@@ -71,44 +78,25 @@ const SearchExercises: React.FC = () => {
         Awesome Exercises You <br /> Should Know
       </Typography>
 
-      <Box position="relative" mb="4.5rem">
+      <Box position="relative" mb="72px">
         <TextField
-          sx={{
-            input: {
-              fontWeight: "700",
-              border: "none",
-              borderRadius: "0.25rem",
-              // height: "4rem"
-            },
-            width: { lg: "800px", md: "500px", sm: "400px", xs: "280px" },
-            backgroundColor: "#fff",
-          }}
+          
+          sx={{ input: { fontWeight: '700', border: 'none', borderRadius: '4px' }, width: { lg: '1170px', xs: '350px' }, backgroundColor: '#fff', borderRadius: '40px' }}
           value={search}
-          // onChange={(e) => setSearch(e.target.value)}
-          onChange={handleInputChange}
+          onChange={(e) => setSearch(e.target.value.toLowerCase())}
           placeholder="Search Exercises"
           type="text"
         />
-
-        <Button
-          className="search-btn"
-          sx={{
-            bgcolor: "#ff2625",
-            color: "#fff",
-            textTransform: "none",
-            width: { lg: "175px", xs: "80px" },
-            fontSize: { lg: "1.25rem", xs: "14px" },
-            height: "56px",
-            position: "absolute",
-            right: 0,
-          }}
-          onClick={handleSearch}
-        >
+        <Button className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff', textTransform: 'none', width: { lg: '173px', xs: '80px' }, height: '56px', position: 'absolute', right: '0px', fontSize: { lg: '20px', xs: '14px' } }} onClick={handleSearch}>
           Search
         </Button>
       </Box>
-      <Box>
-        
+      <Box sx={{ position: "relative", width: "100%", p: "20px" }}>
+        <HorizontalScrollBar
+          data={bodyParts}
+          bodyPart={bodyPart}
+          setBodyPart={setBodyPart}
+        />
       </Box>
     </Stack>
   );

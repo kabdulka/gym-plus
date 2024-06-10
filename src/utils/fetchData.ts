@@ -22,7 +22,7 @@ export const exerciseOptions = {
 export const fetchData = async (url: string, options: AxiosRequestConfig) => {
     try {
         const response = await axios.get(url, options);
-        console.log("here");
+        console.log(response.data);
         return response.data;
     } catch (e) {
         console.log(e)
